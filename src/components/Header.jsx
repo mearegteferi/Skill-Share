@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
+import { NavLink } from "react-router";
+import Head from "../assets/head.jpeg"
 
 function Header() {
   return (
-    <header className="bg-[#1f1f1f] sticky top-0 z-20 w-full flex justify-between items-center border-b border-gray-500 p-8">
-      <div className="text-white font-bold">Sofi Restaurant</div>
+    <header className="bg-cover sticky top-0 z-20 w-full flex justify-center items-center p-6"
+    style={{ backgroundImage: `url(${Head})` }}>
       <Nav />
     </header>
   );
@@ -18,7 +20,7 @@ function Nav() {
 
   return (
     <nav>
-      <div className="hidden md:flex gap-4 text-white font-bold">
+      <div className="hidden md:flex gap-16 text-xl text-white font-bold">
         <NavLinks />
       </div>
       <div className="md:hidden">
@@ -38,11 +40,21 @@ function Nav() {
 function NavLinks() {
   return (
     <>
-      <a href="#">Home</a>
-      <a href="#">Menu</a>
-      <a href="#">Book</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+      <NavLink to="/" className={({ isActive }) => (isActive ? "text-gold underline" : "")}>
+        Home
+      </NavLink>
+      <NavLink to="/menu" className={({ isActive }) => (isActive ? "text-gold" : "")}>
+        Menu
+      </NavLink>
+      <NavLink to="/book" className={({ isActive }) => (isActive ? "text-gold" : "")}>
+        Book
+      </NavLink>
+      <NavLink to="/about" className={({ isActive }) => (isActive ? "text-gold" : "")}>
+        About
+      </NavLink>
+      <NavLink to="contact" className={({ isActive }) => (isActive ? "text-gold" : "")}>
+        Contact
+      </NavLink>
     </>
   );
 }

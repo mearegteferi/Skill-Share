@@ -1,9 +1,28 @@
+import Hero from "../assets/hero.jpeg";
+
 function Home() {
-    return(
-        <>
-        <div>Home</div>
-        </>
-    )
+  return (
+    <div
+      className="w-full h-[calc(100vh-75px)] bg-cover bg-center"
+      style={{
+        backgroundImage: `url(${Hero})`,
+      }}
+    >
+      <div className="flex flex-col items-center pt-20  text-white font-serif mx-auto">
+        <div className=" font-bold text-3xl md:text-5xl">
+          SOFI RESTAURANT
+        </div>
+        <div className="mt-4 sm:w-[500px] w-[400px]">
+        Savor comfort food at its finest, made with love and the freshest local ingredients. Weekend brunch buffet featuring bottomless mimosas. 
+        Early bird specials offering incredible value on your favorite dishes
+        </div>
+        <div className="mt-10 flex gap-8">
+            <button className="border-2 border-gold px-4 py-1 text-white bg-gold font-bold rounded-2xl hover:bg-transparent hover:">Order</button>
+            <button className="border-2 border-gold px-4 py-1 text-white font-bold rounded-2xl hover:bg-gold">Book Table</button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Home;
