@@ -1,6 +1,7 @@
 import Hero from "./Hero";
 import Offer from "./Offer";
 import Food from "./Food";
+import About from "./About"
 
 function Home() {
     return(
@@ -8,6 +9,7 @@ function Home() {
         <Hero />
         <Offer />
         <Food />
+        <About />
         </>
     )
 }
