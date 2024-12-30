@@ -72,6 +72,12 @@ function NavLinks() {
       >
         Contact
       </NavLink>
+      <NavLink
+        to="cart"
+        className={({ isActive }) => (isActive ? 'text-gold' : '')}
+      >
+        Cart
+      </NavLink>
     </>
   );
 }
