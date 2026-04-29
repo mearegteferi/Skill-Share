@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 from pwdlib.hashers.bcrypt import BcryptHasher
-from sqlmodel import Session
+from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.security import get_password_hash, verify_password

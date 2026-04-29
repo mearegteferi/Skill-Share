@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from sqlmodel import select
+from sqlalchemy import select
 
 from app.tests_pre_start import init, logger
 
@@ -30,4 +30,4 @@ def test_init_successful_connection() -> None:
             "The database connection should be successful and not raise an exception."
         )
 
-        session_mock.exec.assert_called_once_with(select1)
+        session_mock.execute.assert_called_once_with(select1)
