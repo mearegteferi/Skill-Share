@@ -1,5 +1,4 @@
 import uuid
-from typing import Any
 
 from app.core.security import get_password_hash, verify_password
 from app.modules.users.models import User
@@ -57,7 +56,3 @@ class UserService:
 
     def delete_user(self, user: User) -> None:
         self.repository.delete(user)
-
-    @staticmethod
-    def public_update_data(user_data: dict[str, Any]) -> dict[str, Any]:
-        return user_data
