@@ -19,8 +19,8 @@ from app.modules.users.schemas import (
     UserUpdate,
     UserUpdateMe,
 )
+from app.shared.email import generate_new_account_email, send_email
 from app.shared.schemas import Message
-from app.utils import generate_new_account_email, send_email
 
 router = APIRouter(prefix="/users", tags=["users"])
 

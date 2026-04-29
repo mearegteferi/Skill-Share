@@ -13,13 +13,9 @@ from app.modules.users.dependencies import (
     get_current_active_superuser,
 )
 from app.modules.users.schemas import NewPassword, Token, UserPublic, UserUpdate
+from app.shared.email import generate_reset_password_email, send_email
 from app.shared.schemas import Message
-from app.utils import (
-    generate_password_reset_token,
-    generate_reset_password_email,
-    send_email,
-    verify_password_reset_token,
-)
+from app.shared.tokens import generate_password_reset_token, verify_password_reset_token
 
 router = APIRouter(tags=["login"])
 

@@ -1,11 +1,12 @@
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session, sessionmaker
 
-from app import crud
 from app.core.config import settings
 from app.models import Base
 from app.modules.users.models import User
+from app.modules.users.repository import SQLAlchemyUserRepository
 from app.modules.users.schemas import UserCreate
+from app.modules.users.service import UserService
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), pool_pre_ping=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
@@ -26,4 +27,4 @@ def init_db(session: Session) -> None:
             password=settings.FIRST_SUPERUSER_PASSWORD,
             is_superuser=True,
         )
-        crud.create_user(session=session, user_create=user_in)
+        UserService(SQLAlchemyUserRepository(session)).create_user(user_in)
