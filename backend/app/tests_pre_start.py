@@ -1,7 +1,6 @@
 import logging
 
-from sqlalchemy import Engine
-from sqlalchemy import select
+from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 
