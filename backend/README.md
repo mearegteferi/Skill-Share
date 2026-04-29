@@ -27,7 +27,28 @@ $ source .venv/bin/activate
 
 Make sure your editor is using the correct Python virtual environment, with the interpreter at `backend/.venv/bin/python`.
 
-Modify or add SQLAlchemy ORM models and Pydantic schemas in `./backend/app/models.py`, API endpoints in `./backend/app/api/`, CRUD (Create, Read, Update, Delete) utils in `./backend/app/crud.py`.
+Add new backend capabilities as feature modules under `./backend/app/modules/`. Each module should own its router, schemas, ORM models, service layer, repository/data access, and dependencies. Shared infrastructure belongs in `./backend/app/shared/` or `./backend/app/core/`.
+
+Current backend layout:
+
+```text
+app/
+├── api/                  # API composition and non-feature operational routes
+├── core/                 # Settings, database engine/session factory, security
+├── modules/
+│   └── users/            # Pluggable users feature
+│       ├── auth_router.py
+│       ├── dependencies.py
+│       ├── models.py
+│       ├── module.py
+│       ├── repository.py
+│       ├── router.py
+│       ├── schemas.py
+│       └── service.py
+├── shared/               # Cross-module dependencies, schemas, email, tokens
+├── main.py
+└── models.py             # Shared SQLAlchemy DeclarativeBase
+```
 
 ## VS Code
 
