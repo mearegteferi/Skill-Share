@@ -3,7 +3,9 @@ from sqlalchemy.orm import Session, sessionmaker
 
 from app import crud
 from app.core.config import settings
-from app.models import Base, User, UserCreate
+from app.models import Base
+from app.modules.users.models import User
+from app.modules.users.schemas import UserCreate
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), pool_pre_ping=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)

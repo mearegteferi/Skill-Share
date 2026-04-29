@@ -2,13 +2,13 @@ from collections.abc import Generator
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import delete
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.db import SessionLocal, init_db
 from app.main import app
-from app.models import Item, User
+from app.modules.users.models import User
 from tests.utils.user import authentication_token_from_email
 from tests.utils.utils import get_superuser_token_headers
 
@@ -18,10 +18,8 @@ def db() -> Generator[Session, None, None]:
     with SessionLocal() as session:
         init_db(session)
         yield session
-        statement = delete(Item)
-        session.execute(statement)
-        statement = delete(User)
-        session.execute(statement)
+        for user in session.execute(select(User)).scalars():
+            session.delete(user)
         session.commit()
 
 

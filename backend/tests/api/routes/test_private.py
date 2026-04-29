@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.models import User
+from app.modules.users.models import User
 
 
 def test_create_user(client: TestClient, db: Session) -> None:

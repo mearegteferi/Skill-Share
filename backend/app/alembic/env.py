@@ -21,6 +21,7 @@ fileConfig(config.config_file_name)
 
 from app.core.config import settings  # noqa
 from app.models import Base  # noqa
+from app.modules.users import models as users_models  # noqa
 
 target_metadata = Base.metadata
 
