@@ -2,7 +2,7 @@ import uuid
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import col, delete, func, select
+from sqlalchemy import delete, func, select
 
 from app import crud
 from app.api.deps import (
@@ -40,12 +40,10 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
 
     count_statement = select(func.count()).select_from(User)
-    count = session.exec(count_statement).one()
+    count = session.execute(count_statement).scalar_one()
 
-    statement = (
-        select(User).order_by(col(User.created_at).desc()).offset(skip).limit(limit)
-    )
-    users = session.exec(statement).all()
+    statement = select(User).order_by(User.created_at.desc()).offset(skip).limit(limit)
+    users = session.execute(statement).scalars().all()
 
     users_public = [UserPublic.model_validate(user) for user in users]
     return UsersPublic(data=users_public, count=count)
@@ -93,7 +91,8 @@ def update_user_me(
                 status_code=409, detail="User with this email already exists"
             )
     user_data = user_in.model_dump(exclude_unset=True)
-    current_user.sqlmodel_update(user_data)
+    for field, value in user_data.items():
+        setattr(current_user, field, value)
     session.add(current_user)
     session.commit()
     session.refresh(current_user)
@@ -225,8 +224,8 @@ def delete_user(
         raise HTTPException(
             status_code=403, detail="Super users are not allowed to delete themselves"
         )
-    statement = delete(Item).where(col(Item.owner_id) == user_id)
-    session.exec(statement)
+    statement = delete(Item).where(Item.owner_id == user_id)
+    session.execute(statement)
     session.delete(user)
     session.commit()
     return Message(message="User deleted successfully")
