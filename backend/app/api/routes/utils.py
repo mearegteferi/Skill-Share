@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic.networks import EmailStr
 
-from app.api.deps import get_current_active_superuser
+from app.modules.auth.dependencies import get_current_active_superuser
 from app.shared.email import generate_test_email, send_email
 from app.shared.schemas import Message
 
@@ -14,9 +14,7 @@ router = APIRouter(prefix="/utils", tags=["utils"])
     status_code=201,
 )
 def test_email(email_to: EmailStr) -> Message:
-    """
-    Test emails.
-    """
+    """Send a test email (superuser only)."""
     email_data = generate_test_email(email_to=email_to)
     send_email(
         email_to=email_to,

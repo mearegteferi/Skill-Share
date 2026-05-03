@@ -5,10 +5,10 @@ from sqlalchemy import Boolean, DateTime, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models import Base
+from app.core.base_models import Base
 
 
-def get_datetime_utc() -> datetime:
+def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
@@ -24,5 +24,5 @@ class User(Base):
     full_name: Mapped[str | None] = mapped_column(String(255), default=None)
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True), default=get_datetime_utc
+        DateTime(timezone=True), default=_utcnow
     )

@@ -31,16 +31,16 @@ class SQLAlchemyUserRepository:
         return self.session.get(User, user_id)
 
     def get_by_email(self, email: str) -> User | None:
-        statement = select(User).where(User.email == email)
-        return self.session.execute(statement).scalar_one_or_none()
+        stmt = select(User).where(User.email == email)
+        return self.session.execute(stmt).scalar_one_or_none()
 
     def list(self, *, skip: int = 0, limit: int = 100) -> list[User]:
-        statement = select(User).order_by(User.created_at.desc()).offset(skip).limit(limit)
-        return list(self.session.execute(statement).scalars().all())
+        stmt = select(User).order_by(User.created_at.desc()).offset(skip).limit(limit)
+        return list(self.session.execute(stmt).scalars().all())
 
     def count(self) -> int:
-        statement = select(func.count()).select_from(User)
-        return self.session.execute(statement).scalar_one()
+        stmt = select(func.count()).select_from(User)
+        return self.session.execute(stmt).scalar_one()
 
     def delete(self, user: User) -> None:
         self.session.delete(user)

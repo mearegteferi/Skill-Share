@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.core.db import SessionLocal, init_db
+from app.core.database import SessionLocal, init_db
 from app.main import app
 from app.modules.users.models import User
 from tests.utils.user import authentication_token_from_email

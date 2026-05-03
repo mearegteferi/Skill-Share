@@ -16,6 +16,7 @@ class UserCreate(UserBase):
 
 
 class UserRegister(BaseModel):
+    """Public self-registration payload — no privilege escalation fields."""
     email: EmailStr = Field(max_length=255)
     password: str = Field(min_length=8, max_length=128)
     full_name: str | None = Field(default=None, max_length=255)
@@ -46,17 +47,3 @@ class UserPublic(UserBase):
 class UsersPublic(BaseModel):
     data: list[UserPublic]
     count: int
-
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-
-
-class TokenPayload(BaseModel):
-    sub: str | None = None
-
-
-class NewPassword(BaseModel):
-    token: str
-    new_password: str = Field(min_length=8, max_length=128)

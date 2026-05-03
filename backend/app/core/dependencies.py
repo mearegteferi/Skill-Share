@@ -4,7 +4,7 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from app.core.db import SessionLocal
+from app.core.database import SessionLocal
 
 
 def get_db() -> Generator[Session, None, None]:

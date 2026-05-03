@@ -3,8 +3,13 @@ from fastapi import FastAPI
 from fastapi.routing import APIRoute
 from starlette.middleware.cors import CORSMiddleware
 
-from app.api.main import api_router
 from app.core.config import settings
+from app.core.logging import configure_logging
+from app.modules.auth.router import router as auth_router
+from app.modules.users.router import router as users_router
+from app.api.routes import private, utils
+
+configure_logging()
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:
@@ -20,7 +25,6 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id,
 )
 
-# Set all CORS enabled origins
 if settings.all_cors_origins:
     app.add_middleware(
         CORSMiddleware,
@@ -30,4 +34,10 @@ if settings.all_cors_origins:
         allow_headers=["*"],
     )
 
-app.include_router(api_router, prefix=settings.API_V1_STR)
+# --- Router registration (explicit, no dynamic loading) ---
+app.include_router(auth_router, prefix=settings.API_V1_STR)
+app.include_router(users_router, prefix=settings.API_V1_STR)
+app.include_router(utils.router, prefix=settings.API_V1_STR)
+
+if settings.ENVIRONMENT == "local":
+    app.include_router(private.router, prefix=settings.API_V1_STR)

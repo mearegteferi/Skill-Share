@@ -19,7 +19,6 @@ def test_create_user(client: TestClient, db: Session) -> None:
     assert r.status_code == 200
 
     data = r.json()
-
     user = db.execute(select(User).where(User.id == data["id"])).scalar_one_or_none()
 
     assert user
